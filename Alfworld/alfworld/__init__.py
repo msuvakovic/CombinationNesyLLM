@@ -1,0 +1,2 @@
+from alfworld.info import *
+
