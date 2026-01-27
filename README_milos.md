@@ -9,7 +9,7 @@ There are a lot of hardcoded envrionemtn labels. This setup likely will fail at 
 
 ## To run 
 
-1. place the following contents of this google drive zip file at in data/alfdata directory of this repository
+1. place the following contents of this google drive zip file at in data/alfdata directory of this repository (link: https://drive.google.com/drive/folders/1zmOOAg9InkbXNwPxxqe3gzcIHwk2_FTr?usp=sharing)
 2. inside run.sh set your designated api keys
 3. use the run.sh file with "./run.sh"
 
