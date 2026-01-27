@@ -32,6 +32,14 @@ logs/
 *.out
 *.err
 
+*.mp4
+*.avi
+*.mov
+*.png
+*.jpg
+*.jpeg
+
+
 # large files to be added later not via git
 data/alfworld/
 Alfworld/data/alfdata/
