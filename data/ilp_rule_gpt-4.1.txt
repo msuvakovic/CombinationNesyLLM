@@ -1,0 +1,43 @@
+:- action(pick_up(O, L), T), openable(L), not is_opened(L, T).
+:- action(pick_up(O, L), T), at(O, L, T), not is_opened(L, T).
+:- action(pick_up(O, L), T), robot_at(L,
+:- not object(O), action(put_down(O, L), T)
+:- not location(L), action(put_down(O, L), T)
+:- not step(T), action(put_down(O, L), T)
+:- not holding(O, T), action(put_down(O, L), T)
+:- not
+:- action(pick_up(O, L), T), not at(O, L, T).
+:- action(pick_up(O, L), T), not robot_at(L, T).
+:- action(pick_up(O, L), T), not object(O).
+:- action(pick_up(O, L), T), not
+:- not object(O), action(pick_up(O, L), T).
+:- not location(L), action(pick_up(O, L), T).
+:- not robot_at(L, T), action(pick_up(O, L), T).
+:- holding(O, T), action(pick_up(O, L), T).
+:- action(pick_up(O, L), T), not robot_at(L, T).
+:- action(pick_up(O, L), T), not at(O, L, T).
+:- action(pick_up(O, L), T), not object(O).
+:- action(pick_up(O, L), T), not
+:- action(put_down(O, L), T), holding(O, T), robot_at(L, T), (L = dining_room_table).
+:- action(put_down(O, L), T), holding(O, T), robot_at(L, T), (L = kitchen_drawer).
+:- action(put_down(O
+:- action(heat(O, L), T), not is_heater(L).
+:- action(heat(O, L), T), not holding(O, T).
+:- action(heat(O, L), T), not robot_at(L, T).
+:- action(heat(O, L), T), not object(O).
+:-
+:- action(cool(O, L), T), not is_cooler(L).
+:- action(cool(O, L), T), not holding(O, T).
+:- action(cool(O, L), T), not robot_at(L, T).
+:- action(cool(O, L), T), not is_cooler(L).
+:- action(cool(O, L), T), not holding(O, T).
+:- action(cool(O, L), T), not robot_at(L, T).
+:- action(clean(O, L), T), not holding(O, T).
+:- action(clean(O, L), T), not cleanable(O).
+:- action(clean(O, L), T), not robot_at(L, T).
+:- action(clean(O, L), T), not is_cleaner(L).
+:- action(open(L), T), not robot_at(L, T).  
+:- action(open(L), T), not openable(L).
+:- action(use(O), T), not holding(O, T).
+:- action(use(O), T), not robot_at(L, T), at(O, L, T).
+:- action(use(O), T), not object(O).

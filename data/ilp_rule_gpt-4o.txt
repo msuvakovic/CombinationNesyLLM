@@ -1,0 +1,3 @@
+:- action(pick_up(O, L), T), not robot_at(L, T).
+:- action(heat(O, L), T),
+:- robot_at(L,

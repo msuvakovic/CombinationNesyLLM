@@ -1,0 +1,13 @@
+:- action(pick_up(O, L), T), not openable(L).
+:- action(pick_up(O, L),
+:- carrier(henry).
+:- carrier(beth).
+:- carrier(henry), carrier
+:- action(pick_up(O, L), T), not at(O, L, T).
+:- action(put_down(O, L), T), not holding(O, T).
+:- is_heated(O, T), is_cooled(O, T).
+:- action(cool(O, L), T), not
+:- action(cool(O, L), T), not at(O, L, T).
+:- action(clean(O, L), T), not holding(O, T).
+:- carrier(X), X =
+:- carrier(henry), carrier(beth).

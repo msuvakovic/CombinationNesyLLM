@@ -103,6 +103,8 @@ goal(T) :- goal(T-1), step(T), T > 0.
 location(middle_of_room).
 robot_at(middle_of_room, 0).
 #show action/2.
+
+
 '''
 
 BASE_ASP_PROGRAM = '''
@@ -188,4 +190,7 @@ holding(O, T+1) :- holding(O, T), not action(put_down(O, _), T), step(T+1).
 location(middle_of_room).
 robot_at(middle_of_room, 0).
 #show action/2.
+
 '''
+
+

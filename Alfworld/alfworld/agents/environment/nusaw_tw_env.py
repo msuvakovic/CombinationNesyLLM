@@ -182,8 +182,11 @@ class NusawAlfredTWEnv(AlfredTWEnv):
                     alfred_demangler = AlfredDemangler(shuffle=False)
                     request_infos = textworld.EnvInfos(admissible_commands=True, extras=["gamefile"])
                     expert = AlfredExpert(env, expert_type=self.config["env"]["expert_type"])
-                    env = textworld.start(game_file_path, request_infos, wrappers=[alfred_demangler, AlfredInfos, expert])
-
+                    try:
+                        env = textworld.start(game_file_path, request_infos, wrappers=[alfred_demangler, AlfredInfos, expert])
+                    except Exception as e:
+                        print(f"Skipping trial due to logic error: {e}")
+                        continue
                 log("Generating walkthrough for {}.".format(game_file_path))
                 trajectory = self.is_solvable(env, game_file_path)
 

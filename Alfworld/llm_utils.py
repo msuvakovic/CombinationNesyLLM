@@ -22,7 +22,7 @@ from langchain_google_genai import (
 )
 
 from langchain.globals import set_llm_cache
-from langchain.cache import SQLiteCache
+from langchain_community.cache import SQLiteCache
 set_llm_cache(SQLiteCache(database_path=".langchain.db"))
 
 def google_llm(prompt, model_name='gemini-1.5-flash', temperature=0.0, top_p=1.0, max_tokens=4096, stop=[]):
@@ -63,12 +63,16 @@ def meta_llm(prompt, model_name= "meta/meta-llama-3-70b", temperature=0.0, top_p
     return response
 
 from langchain_community.callbacks import get_openai_callback
-def openai_llm(prompt, model_name='gpt-4o', temperature=0.0, top_p=1.0, max_tokens=4096,stop=[]): # stop=["\n"]
+def openai_llm(prompt, model_name='gpt-4o', temperature=0.0, top_p=1.0, max_tokens=8000,stop=None): # stop=["\n"]
+    kwargs = {}
+    if stop:  # only include stop if non-empty
+        kwargs["stop"] = stop
+  
     llm = ChatOpenAI(temperature=temperature,
                 max_tokens=max_tokens,
                 model_name=model_name,
                 openai_api_key=OPENAI_API_KEY,
-                model_kwargs={"stop": stop})
+                model_kwargs=kwargs)
     with get_openai_callback() as cb:
         response = llm.invoke(prompt).content
         # print(cb)

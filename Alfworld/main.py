@@ -77,11 +77,11 @@ def main():
     parser.add_argument('--dynamics', type=str, default='stationary', help='stationary | low_non_stationary | high_non_stationary')
     parser.add_argument('--procedure', type=str, default='adapt', help='general | adapt | both')
     parser.add_argument('--method', type=str, default='ours', help='ours | react | reflexion | llm_planner | clmasp')
-    parser.add_argument('--engine', type=str, default='gemini-1.0-pro', help='gpt-4-0314 | gemini-1.0-pro | gemini-1.5-pro | gemini-1.5-flash')
+    parser.add_argument('--engine', type=str, default='gemini-1.0-pro', help='gpt-4o | gemini-1.0-pro | gemini-1.5-pro | gemini-1.5-flash')
     parser.add_argument('--split', type=str, default='eval_in_distribution', help='train | eval_in_distribution | eval_out_distribution')
     parser.add_argument('--perturb', type=float, default=0.5, help='missing rate of location')
     parser.add_argument('--seed', type=int, default=42, help='random seed')
-    parser.add_argument('--save_path', type=str, default='./Nesyc/Alfworld/ablation2_alfworld_results.csv', help='path to save the results')
+    parser.add_argument('--save_path', type=str, default='./Alfworld/ablation2_alfworld_results.csv', help='path to save the results')
     parser.add_argument('--eval_episode_num', type=int, default=20, help='number of episodes to evaluate')
     parser.add_argument('--grounding', action='store_true', help='whether to use grounding')
     parser.add_argument('--cot', action='store_true', help='Chain of thought')
@@ -98,7 +98,7 @@ def main():
     print("\n")
 
     np.random.seed(args.seed)
-    save_path = f'./Nesyc/Alfworld/data/ilp_rule_{args.engine}.txt'
+    save_path = f'data/ilp_rule_{args.engine}.txt'
 
     if args.procedure == 'general':
         args_dict = vars(args)

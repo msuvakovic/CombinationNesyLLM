@@ -19,7 +19,8 @@ There are a lot of hardcoded envrionemtn labels. This setup likely will fail at 
 2. included alfworld data
 3. minor fixes to some (but not all) hardcoded repository layouts in python code
 4. fix some problems iwth prompt loading
-
+5. initalized missing directories
+6. 
 
 
 ## extra tips

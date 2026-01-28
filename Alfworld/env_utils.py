@@ -10,7 +10,7 @@ from typing import Dict, Any, Callable, List
 
 def load_paraphrased_instruction(name: str, dynamics_type: str):
     try:
-        with open(f"./Nesyc/Alfworld/data/instr/{dynamics_type}_paraphrased_instr.json", "r") as f: # {dynamics_type}
+        with open(f"./Alfworld/data/instr/{dynamics_type}_paraphrased_instr.json", "r") as f: # {dynamics_type}
             data = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         print("Error: Unable to read the file.")
@@ -33,7 +33,7 @@ def save_error_log(dynamics_type, name, goal, goal_state, adapted_rules, predict
         "total_traj": total_traj,
         "timestamp": datetime.datetime.now().isoformat()
     }
-    file_path = f"./Nesyc/Alfworld/data/error_log/{dynamics_type}_error_analysis.json"
+    file_path = f"./Alfworld/data/error_log/{dynamics_type}_error_analysis.json"
     if not os.path.exists(file_path):
         existing_data = []
     else:
@@ -99,9 +99,9 @@ def run_alfworld(
         if pipeline.mode != 'complete':
             generalized_rules = load_generalized_rules(pipeline.rule_save_path)
             pipeline.adapted_rules = generalized_rules
+        # attempting to byapss not parahprase goal
         if not paraphrased_goal:
-            print(f"Instruction for task '{name}' not found. Skipping...")
-            continue
+            paraphrased_goal = obs.split("Your task is to:")[-1].strip()
 
         if dynamics_type == 'high_non_stationary':
             obs = obs.split('\nYour task is to:')[0] + f"\nYour task is to: {missing_paraphrased_goal}"
@@ -125,7 +125,7 @@ def run_alfworld(
 
 
         # Initialize pipeline state
-        if method == 'ours' and pipeline.asp and pipeline.ilp:
+        if method == 'ours' and pipeline.grounding:
             pipeline.init_state = high_perturb_locations + attributes
             predicates_str = parse_predicates(attributes)
             pipeline.prompt['goal'] = pipeline.prompt['goal'].replace('XXXXX', predicates_str)
@@ -365,12 +365,13 @@ def run_episode(
         
         if method == 'ours':
             answer_sets = pipeline.eval_single_plan(example, opt=True)
-            if pipeline.asp:
+            if pipeline.grounding:
                 predicted_plan = parse_predicted_plan(answer_sets)
                 predicted_plans.append(predicted_plan)
                 action = filter_actions_by_step(predicted_plan, step_num)
             else:
                 action = answer_sets[0]
+        else:
             raise ValueError(f"Invalid method: {method}")
         
         action_info = {
@@ -388,7 +389,7 @@ def run_episode(
         
         if '\nDatabase update:' in obs:
             new_state = obs.split('\nDatabase update:')[1]
-            if method == 'ours' and pipeline.asp and pipeline.ilp:
+            if method == 'ours' and pipeline.grounding:
                 pipeline.init_state = new_state + '\n' + attributes       
                 obs = obs.split('\nDatabase update:')[0]
             else:

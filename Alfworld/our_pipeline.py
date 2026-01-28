@@ -69,6 +69,8 @@ def rule_filtering(text):
 
 class Pipeline:
     def __init__(self, args = {}):
+        self.asp = True 
+        self.ilp = True
         self.asp_program = ''
         self.init_state = ''
         self.dynamic_facts = ''
@@ -297,7 +299,8 @@ class Pipeline:
     def gen_goal_state_response(self, instruction, kind):
         prompt = f"{self.prompt[kind]}{instruction.strip()}"
         response = self._generate_llm_response(prompt, '\nSemantic Parse:')
-        response = f"goal(T) :- {response}"
+        response = response.strip().rstrip('.')
+        response = f"goal(T) :- {response}."
         # Heuristic matching
         response = response.replace('is_coffemachine', 'is_coffeemachine')
         response = response.replace('is_soap(', 'is_soapbar(')
