@@ -19,3 +19,9 @@ There are a lot of hardcoded envrionemtn labels. This setup likely will fail at 
 2. included alfworld data
 3. minor fixes to some (but not all) hardcoded repository layouts in python code
 4. fix some problems iwth prompt loading
+
+
+
+## extra tips
+
+- for each api key setting, you only need to input the api key for that specific model (i.e. if you use gemini as the set llm in main, you only need to use the api for google's gemini services_)
