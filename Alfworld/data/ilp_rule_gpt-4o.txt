@@ -1,0 +1,65 @@
+:- action(pick_up(O, L), T), not robot_at(L, T).
+:- action(pick_up(O, L), T), not at(O, L, T).
+:- action(pick_up(O, L), T), not openable(L), not is_opened(L, T).
+:- action(pick_up(O, L), T), openable(L), not is_opened(L, T).
+:- action(put_down(O, L), T), not holding(O, T).
+:- action(put_down(O, L), T), not robot_at(L, T).
+:- action(put_down(O, L), T), not object(O).
+:- action(put_down(O, L), T), not location(L).
+:- action(put_down(O, L), T), is_opened(O, T).
+:- action(put_down(O, L), T), is_cleaned(O, T).
+:- action(put_down(O, L), T), is_heated(O, T).
+:- action(put_down(O, L), T), is_cooled(O, T).
+% Constraint: The robot cannot pick up an object if it is not at the same location as the object.
+:- action(pick_up(O, L), T), not robot_at(L, T).
+% Constraint: The robot cannot pick up an object if the object is not at the specified location.
+:- action(pick_up(O, L), T), not at(O, L, T).
+% Constraint: The robot cannot pick up an object from a location that is not defined as a location.
+:- action(pick_up(O, L), T), not location(L).
+% Constraint: The robot cannot pick up an object that is not defined as an object.
+:- action(pick_up(O, L), T), not object(O).
+% Constraint: The robot cannot pick up an object if it is already holding something.
+:- holding(_, T), action(pick_up(O, L), T).
+% Constraint: The robot cannot pick up an object from a location if it is not at that location.
+:- not robot_at(L, T), action(pick_up(O, L), T).
+% Constraint: The robot cannot pick up an object that is not defined as an object.
+:- not object(O), action(pick_up(O, L), T).
+% Constraint: The robot cannot pick up an object from a location that is not defined as a location.
+:- not location(L), action(pick_up(O, L), T).
+% Constraint: The robot cannot pick up an object if it is not at the same location as the object.
+:- action(pick_up(O, L), T), not robot_at(L, T).
+% Constraint: The robot cannot pick up an object if the object is not at the specified location.
+:- action(pick_up(O, L), T), not at(O, L, T).
+% Constraint: The robot cannot pick up an object if the object is not defined as an object.
+:- action(pick_up(O, L), T), not object(O).
+% Constraint: The robot cannot pick up an object from a location that is not defined as a location.
+:- action(pick_up(O, L), T), not location(L).
+:- robot_at(kitchen, T), holding(plate, T), action(put_down(plate, dining_room_table), T).
+:- holding(tool, T), robot_at(garage, T), not at(tool, kitchen_drawer, T), action(put_down(tool, kitchen_drawer), T).
+:- action(heat(O, L), T), not robot_at(L, T).
+:- action(heat(O, L), T), not holding(O, T).
+:- action(heat(O, L), T), not is_heater(L).
+:- action(heat(O, L), T), not object(O).
+:- action(heat(O, L), T), not location(L).
+:- action(heat(O, L), T), not step(T).
+% Constraint: An object cannot be cooled if the location is not a cooler.
+:- action(cool(O, L), T), not is_cooler(L).
+% Constraint: An object cannot be cooled if the robot is not at the location.
+:- action(cool(O, L), T), not robot_at(L, T).
+% Constraint: An object cannot be cooled if it is not being held.
+:- action(cool(O, L), T), not holding(O, T).
+% Constraint: An object must be held to perform a cooling action.
+:- action(cool(O, L), T), not holding(O, T).
+% Constraint: The robot must be at the location of the cooler to perform a cooling action.
+:- action(cool(O, L), T), not robot_at(L, T).
+% Constraint: The location must be a cooler to perform a cooling action.
+:- action(cool(O, L), T), not is_cooler(L).
+:- action(clean(O, L), T), not holding(O, T).
+:- action(clean(O, L), T), not robot_at(L, T).
+:- action(clean(O, L), T), not is_cleaner(L).
+:- robot_at(L, T), openable(L), not action(open(L), T).
+:- action(open(L), T), not openable(L).
+:- action(open(L), T), not robot_at(L, T).
+:- action(use(O), T), not holding(O, T).
+:- action(use(O), T), not robot_at(L, T), at(O, L, T).
+:- action(use(O), T), robot_at(L1, T), at(O, L2, T), L1 != L2.
