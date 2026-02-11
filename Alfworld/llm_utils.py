@@ -8,8 +8,8 @@ from langchain.schema import (
 from langchain_core.messages import HumanMessage
 import random
 import time
-openai.api_key = OPENAI_API_KEY = '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'
-GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', 'AIzaSyCHQS6j7WZBSAQavLvv9AJW57pjzfmifgM')
+openai.api_key = OPENAI_API_KEY = ''
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
 
 from langchain_google_genai import (
     ChatGoogleGenerativeAI,
