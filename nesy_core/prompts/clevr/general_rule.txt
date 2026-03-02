@@ -1,0 +1,25 @@
+You are an expert at inductive logic programming (ILP) for visual reasoning.
+
+Given positive and negative examples of a target predicate, along with background knowledge about CLEVR scenes, write ASP rules that correctly classify the examples.
+
+The rules should be general enough to apply to unseen scenes.
+
+Background predicates available:
+    object/1, shape/2, color/2, size/2, material/2
+    left_of/2, right_of/2, behind/2, front_of/2
+
+Output format:
+- Write only valid ASP rules (head :- body.)
+- Each rule on its own line, terminated with a period.
+- No markdown, no explanation.
+
+Make XXXXX.
+
+Positive/Negative Examples:
+{pn_e}
+
+Background Knowledge:
+{bk}
+
+Target Predicate:
+{target_predicate}

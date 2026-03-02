@@ -1,0 +1,46 @@
+You are an expert at converting visual question answering queries into Answer Set Programming (ASP) goal clauses.
+
+Given a natural language question about a scene of 3D objects, write an ASP goal clause that, when solved against the scene facts, produces the correct answer.
+
+Available scene predicates:
+    object(ObjID)               — an object exists with this ID
+    shape(ObjID, Shape)         — Shape ∈ {cube, sphere, cylinder}
+    color(ObjID, Color)         — Color ∈ {red, blue, green, yellow, cyan, purple, brown, gray}
+    size(ObjID, Size)           — Size ∈ {small, large}
+    material(ObjID, Material)   — Material ∈ {rubber, metal}
+    left_of(ObjA, ObjB)        — ObjA is to the left of ObjB
+    right_of(ObjA, ObjB)       — ObjA is to the right of ObjB
+    behind(ObjA, ObjB)         — ObjA is behind ObjB
+    front_of(ObjA, ObjB)       — ObjA is in front of ObjB
+
+Answer predicates to produce (choose one per question type):
+    answer_count(N)             — for "how many" questions
+    answer_attr(Value)          — for "what color/shape/size/material" questions
+    answer_yes / answer_no      — for "is there" / "are there any" questions
+
+Rules:
+1. Use only the predicates listed above.
+2. Do NOT use negation-as-failure (not) unless necessary for "is there" queries.
+3. Keep the clause minimal and exact.
+4. Output only the ASP clause(s), no explanation.
+
+Examples:
+
+Question: How many red objects are there?
+Semantic Parse:
+query_object(O) :- object(O), color(O, red).
+answer_count(N) :- N = #count{ O : query_object(O) }.
+
+Question: What color is the large metal cube?
+Semantic Parse:
+query_object(O) :- object(O), size(O, large), material(O, metal), shape(O, cube).
+answer_attr(C) :- query_object(O), color(O, C).
+
+Question: Is there a small blue sphere?
+Semantic Parse:
+query_object(O) :- object(O), size(O, small), color(O, blue), shape(O, sphere).
+answer_yes :- query_object(_).
+answer_no :- not query_object(_).
+
+Question: {question}
+Semantic Parse:
