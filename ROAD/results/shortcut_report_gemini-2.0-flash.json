@@ -1,0 +1,33 @@
+{
+  "concept_drift": {
+    "phase1\u2192phase2": 241,
+    "phase2\u2192phase3": 241
+  },
+  "generalisation_gap": {
+    "phase1_in_phase_violations": 241,
+    "phase2_in_phase_violations": 241,
+    "phase2_backward_compat_gap": 0,
+    "phase2_forward_compat_gap": 0,
+    "phase3_in_phase_violations": 241,
+    "phase3_backward_compat_gap": 0,
+    "phase3_forward_compat_gap": 0
+  },
+  "constraint_coverage": {
+    "phase1": 0.1707,
+    "phase2": 0.3171,
+    "phase3": 0.4878
+  },
+  "top_cooccurrence_biases": [
+    [
+      "cyc",
+      "jun",
+      0.8108
+    ]
+  ],
+  "shortcut_risk": {
+    "max_drift_violations": 241,
+    "max_generalisation_gap": 0,
+    "min_constraint_coverage": 0.1707,
+    "verdict": "HIGH"
+  }
+}

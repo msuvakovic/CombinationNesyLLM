@@ -1,0 +1,11 @@
+:- has_label(T, ped, F, V), has_label(T, car, F, V).
+:- has_label(T, ped, F, V), has_label(T, cyc, F, V).
+:- has_label(T, car, F, V), has_label(T, cyc, F, V).
+:- has_label(T, car, F, V), has_label(T, bus, F, V).
+:- has_label(T, car, F, V), has_label(T, lar_veh, F, V).
+:- has_label(T, bus, F, V), has_label(T, lar_veh, F, V).
+:- has_label(T, mov, F, V), has_label(T, stop, F, V).
+:- has_label(T, em_veh, F, V), has_label(T, ovtak, F, V).
+:- has_label(T, ped, F, V), has_label(T, veh_lane, F, V).
+:- has_label(T, car, F, V), has_label(T, pav, F, V).
+:- has_label(T, incat_left, F, V), has_label(T, incat_rht, F, V).

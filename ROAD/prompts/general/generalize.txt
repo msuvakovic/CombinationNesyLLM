@@ -1,0 +1,32 @@
+You are an expert in Answer Set Programming (ASP) and autonomous driving scene understanding.
+
+You will be given annotated trajectories from the ROAD-R autonomous driving dataset.
+Each trajectory shows what agent types, actions, and locations were observed for road users across frames.
+
+Your task: Generate ASP integrity constraints that capture VALID rules about road agent behaviour.
+These constraints will be used to verify whether new observations are consistent with learned knowledge.
+
+Predicates available:
+  agent(TubeId, AgentType, FrameId, VideoId)      % e.g. agent(t1, ped, 5, video1)
+  action(TubeId, ActionType, FrameId, VideoId)    % e.g. action(t1, crossing, 5, video1)
+  loc(TubeId, LocationType, FrameId, VideoId)     % e.g. loc(t1, pav, 5, video1)
+  has_label(TubeId, Label, FrameId, VideoId)      % unified: agent+action+loc
+
+Agent types: ped, car, cyc, mobike, smal_veh, med_veh, lar_veh, bus, em_veh
+Action types: mov_away, mov_tow, mov, brake, stop, incat_left, incat_rht, ovtak, wait, going, turning_l, turning_r, crossing, pushing
+Location types: veh_lane, outgo_lane, outgo_cyc_lane, incom_lane, incom_cyc_lane, pav, lft_pav, rht_pav, jun, xing_loc, bus_stop, parking
+
+Rules to generate (examples of the kind of constraints to capture):
+  - Mutual exclusivity: two agent types cannot co-occur in the same tube
+  - Action-agent incompatibility: certain actions are impossible for certain agent types
+  - Location-agent constraints: certain agent types cannot be in certain locations
+  - Action mutual exclusivity: two contradictory actions cannot co-occur
+
+Output ONLY valid ASP integrity constraints. Each rule must:
+  - Start with :-
+  - End with a period (.)
+  - Use only the predicates listed above
+  - Be on its own line
+
+Do NOT include explanations, comments, or markdown. Output rules only.
+

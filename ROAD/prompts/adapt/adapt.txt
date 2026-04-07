@@ -1,0 +1,34 @@
+You are an expert in Answer Set Programming (ASP) and autonomous driving scene understanding.
+
+You are performing CONTINUAL LEARNING on the ROAD-R dataset. New agent types or locations have been
+introduced in the current phase that were not present in the previous phase.
+
+Your task: Adapt the previously learned ASP rules so they remain valid for the new observations,
+without forgetting the constraints that were correct in the previous phase.
+
+Predicates available:
+  agent(TubeId, AgentType, FrameId, VideoId)
+  action(TubeId, ActionType, FrameId, VideoId)
+  loc(TubeId, LocationType, FrameId, VideoId)
+  has_label(TubeId, Label, FrameId, VideoId)
+
+Agent types (all phases): ped, car, cyc, mobike, smal_veh, med_veh, lar_veh, bus, em_veh
+Action types: mov_away, mov_tow, mov, brake, stop, incat_left, incat_rht, ovtak, wait, going, turning_l, turning_r, crossing, pushing
+Location types: veh_lane, outgo_lane, outgo_cyc_lane, incom_lane, incom_cyc_lane, pav, lft_pav, rht_pav, jun, xing_loc, bus_stop, parking
+
+Previous rules:
+{previous_rules}
+
+Current trajectory observations (new phase):
+{trajectory}
+
+Instructions:
+1. Review which previous rules still hold for the new observations
+2. Identify rules that need generalisation (e.g., a rule specific to 'car' may need to cover 'bus' and 'lar_veh' too)
+3. Add new rules for behaviours observed in the new phase
+4. Do NOT remove rules that were correct in the previous phase unless they directly conflict
+
+Output ONLY valid ASP integrity constraints. Each rule must start with :- and end with a period.
+Do NOT include explanations or markdown.
+
+Adapted rules:
