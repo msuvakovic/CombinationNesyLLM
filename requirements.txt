@@ -1,0 +1,19 @@
+# NeSy core
+clingo
+
+# LLM providers
+anthropic
+openai
+google-generativeai
+
+# LLM framework
+langchain
+langchain-community
+
+# Dataset
+datasets
+huggingface-hub
+
+# Retrieval
+scikit-learn
+numpy

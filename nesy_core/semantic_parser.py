@@ -232,6 +232,8 @@ class AlfworldSemanticParser(SemanticParser):
 # CLEVR concrete parser
 # ---------------------------------------------------------------------------
 
+
+
 class CLEVRSemanticParser(SemanticParser):
     """
     Convert CLEVR scene-graph JSON entries into ASP facts.
@@ -313,7 +315,32 @@ class CLEVRSemanticParser(SemanticParser):
         Produce a rough ASP goal stub for a CLEVR question.
 
         In practice you will want the LLM to do this translation using
-        the 'goal' prompt template.  This method provides a simple regex
+        the 'goal' prompt 
+        rule_sets = ""
+        for action_type, target_predicate in self.get_target_predicates().items():
+            action = action_type.split("_")[0]
+            path = self.get_external_data_path(action)
+            with open(path, "r") as f:
+                dataset = json.load(f)
+
+            p_examples, n_examples = [], []
+            external_trajs = [
+                (d["episode"], d["positive"])
+                for d in dataset
+                if d["action_type"] == action_type
+            ]
+            for traj, positive in external_trajs:
+                example = {
+                    "action_type": action_type,
+                    "traj": traj,
+                    "target_predicate": target_predicate,
+                }
+                pn_e = self.gen_general_fact_response(example)
+                (p_examples if positive == "true" else n_examples).append(
+                    pn_e.split("\n")[0]
+                )
+
+            pn_str = "".join(f"Positive: template.  This method provides a simple regex
         fallback for the most common CLEVR question types.
 
         Question families and their goal patterns:

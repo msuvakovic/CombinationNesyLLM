@@ -9,9 +9,11 @@ Domain-specific behaviour is injected via subclassing or prompt configuration.
 
 import os
 import pickle
-from abc import ABC, abstractmethod
-from typing import Any
 
+from .datasets.ambig_qa import AmbigQADataset
+
+from abc import ABC, abstractmethod
+from typing import Anya
 from .asp_utils import (
     sanitize_asp,
     keep_only_parseable_rules,
@@ -54,6 +56,10 @@ def save_generalized_rules(rules: str, save_path: str) -> None:
 # ---------------------------------------------------------------------------
 # Core Pipeline
 # ---------------------------------------------------------------------------
+
+
+
+
 
 class Pipeline(ABC):
     """
@@ -185,7 +191,7 @@ class Pipeline(ABC):
 
     # ── Goal / fact / rule generation ────────────────────────────────────
 
-    def gen_goal_state_response(self, instruction: str, kind: str = "goal") -> str:
+    def gen_predict_state_response(self, instruction: str, kind: str = "goal") -> str:
         """
         NL instruction → ASP goal clause.
 
@@ -381,7 +387,7 @@ class Pipeline(ABC):
 
         for kind in example:
             if kind == "goal":
-                self.goal_state = self.gen_goal_state_response(example[kind], kind) + "\n"
+                self.goal_state = self.gen_predict_state_response(example[kind], kind) + "\n"
                 print(f"\n{'goal':=^40}\n{self.goal_state}\n{'':=^40}")
                 program = (
                     self.asp_program
@@ -464,3 +470,54 @@ class Pipeline(ABC):
     def get_external_data_path(self, action: str) -> str:
         """Override to point to domain-specific trajectory data."""
         return f"./data/demo/{action}_external_data.json"
+
+
+
+class PipelineQA(Pipeline):
+    @abstractmethod
+    def extract_answer( self, answer_sets):
+        if(not (answer_sets)):
+           return "" 
+        for x in answer_sets[0]:
+            if x.startswith("acceptable_answer("):
+                return x.split('"')[1]
+        return ""
+        
+    def run(self, item: dict):
+        # 1. facts → init_state
+        self.init_state = "\n".join(item["asp_facts"])
+        # 2. LLM → goal_state (ASP query)
+
+        self.goal_state = self.gen_predict_state_response(item["question"])
+        
+        # 3. clingo → answer_sets
+        program = self.asp_program + "\n" + self.init_state + "\n" + self.init_state = "\n" = self.goal_state
+        answer_sets = gen_answer_set
+
+        # 4. parse answer_sets → prediction
+        return self.extract_answer(answer_sets)
+
+
+
+
+
+
+class AmbigQADirectPipeline(PipelineQA):
+    def run(self, item: dict) -> str:
+        # skip ASP entirely, just ask the LLM
+        response = self._generate_llm_response(item["question"])
+        return response.strip()
+    
+    def extract_answer(self, answer_sets):
+        return # not used
+
+
+
+    
+
+
+
+
+        
+
+    
