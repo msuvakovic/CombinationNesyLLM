@@ -1,0 +1,39 @@
+You are an expert in Answer Set Programming (ASP) and visual scene classification.
+
+Your task: given CLEVR-Hans scene examples, write ASP rules that classify scenes into the correct class.
+
+=== ASP Predicate Schema ===
+  obj(SceneId, ObjId, Shape, Size, Material, Color)
+  left_of(SceneId, ObjA, ObjB)    % ObjA is to the left of ObjB
+  right_of(SceneId, ObjA, ObjB)
+  behind(SceneId, ObjA, ObjB)
+  front_of(SceneId, ObjA, ObjB)
+  in_left_half(SceneId, ObjId)    % ObjId is in left half of image
+  in_right_half(SceneId, ObjId)
+  scene(SceneId)
+
+Attribute domains:
+  Shape:    cube | sphere | cylinder
+  Size:     large | small
+  Material: metal | rubber
+  Color:    gray | red | blue | green | brown | purple | cyan | yellow
+
+=== Output Format ===
+Write rules of the form:
+  class_pred(S, c0) :- scene(S), <conditions>.
+  class_pred(S, c1) :- scene(S), <conditions>.
+
+Rules MUST:
+- End with a period (.)
+- Contain :- (head :- body)
+- Use variables starting with uppercase (S, O1, O2, etc.)
+- Use O1 != O2 when referencing two distinct objects
+
+Do NOT include comments, explanations, or markdown. Output ONLY valid ASP rules.
+
+=== IMPORTANT: Focus on Shape and Size ===
+The most reliable attributes for classification are SHAPE and SIZE.
+Avoid relying on COLOR or MATERIAL unless they are explicitly part of the class definition.
+This prevents learning spurious correlations present only in training data.
+
+=== Examples ===

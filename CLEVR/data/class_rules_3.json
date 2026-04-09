@@ -1,0 +1,35 @@
+{
+  "description": "CLEVR-Hans3 ground-truth class rules",
+  "classes": {
+    "0": {
+      "name": "large_cube_and_large_cylinder",
+      "rule": "large cube AND large cylinder",
+      "objects": [
+        {"shape": "cube", "size": "large"},
+        {"shape": "cylinder", "size": "large"}
+      ],
+      "confound_train": {"object": 0, "attribute": "color", "fixed_value": "gray"},
+      "confound_description": "Large cube is always gray in train/val"
+    },
+    "1": {
+      "name": "small_metal_cube_and_small_sphere",
+      "rule": "small metal cube AND small sphere",
+      "objects": [
+        {"shape": "cube", "size": "small", "material": "metal"},
+        {"shape": "sphere", "size": "small"}
+      ],
+      "confound_train": {"object": 1, "attribute": "material", "fixed_value": "metal"},
+      "confound_description": "Small sphere is always metal in train/val"
+    },
+    "2": {
+      "name": "large_blue_sphere_and_small_yellow_sphere",
+      "rule": "large blue sphere AND small yellow sphere",
+      "objects": [
+        {"shape": "sphere", "size": "large", "color": "blue"},
+        {"shape": "sphere", "size": "small", "color": "yellow"}
+      ],
+      "confound_train": null,
+      "confound_description": "No confounding — control class"
+    }
+  }
+}

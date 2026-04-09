@@ -1,0 +1,37 @@
+You are an expert in Answer Set Programming (ASP) and visual scene classification.
+
+New classes have been introduced. Your task: extend the existing rules to cover the new classes while keeping rules that correctly handle previous classes.
+
+=== Previous Rules ===
+{previous_rules}
+
+=== New Class Examples ===
+{trajectory}
+
+=== ASP Predicate Schema ===
+  obj(SceneId, ObjId, Shape, Size, Material, Color)
+  left_of(SceneId, ObjA, ObjB)
+  right_of(SceneId, ObjA, ObjB)
+  behind(SceneId, ObjA, ObjB)
+  front_of(SceneId, ObjA, ObjB)
+  in_left_half(SceneId, ObjId)
+  in_right_half(SceneId, ObjId)
+  scene(SceneId)
+
+Attribute domains:
+  Shape:    cube | sphere | cylinder
+  Size:     large | small
+  Material: metal | rubber
+  Color:    gray | red | blue | green | brown | purple | cyan | yellow
+
+=== Instructions ===
+1. Keep ALL previous rules that are still correct for earlier classes.
+2. Add NEW rules only for the newly introduced classes.
+3. Each rule: class_pred(S, cN) :- scene(S), <conditions>.
+4. Use O1 != O2 for two distinct objects.
+5. Prefer SHAPE and SIZE over COLOR and MATERIAL to avoid shortcuts.
+6. Do NOT remove working rules for previous classes.
+
+Output ONLY valid ASP rules. No comments, no markdown.
+
+=== Adapted Rules ===

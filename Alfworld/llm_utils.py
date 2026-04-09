@@ -8,8 +8,22 @@ from langchain.schema import (
 from langchain_core.messages import HumanMessage
 import random
 import time
+
+# Load environment variables from .env manually
+env_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+if os.path.exists(env_file):
+    with open(env_file) as f:
+        for line in f:
+            if line.strip() and not line.startswith('#'):
+                try:
+                    key, value = line.strip().split('=', 1)
+                    os.environ[key] = value
+                except ValueError:
+                    continue
+
 openai.api_key = OPENAI_API_KEY = ''
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
+XAI_API_KEY = os.environ.get('XAI_API_KEY', '')
 
 from langchain_google_genai import (
     ChatGoogleGenerativeAI,
@@ -37,7 +51,9 @@ def google_llm(prompt, model_name='gemini-1.5-flash', temperature=0.0, top_p=1.0
             response = llm.invoke(prompt, stop=stop).content
             return response
         except Exception as e:
-            time.sleep(2)
+            wait_time = 2 ** step
+            print(f"LLM Error ({step}/10): {e}. Retrying in {wait_time} seconds...")
+            time.sleep(wait_time)
 
 import os
 os.environ["REPLICATE_API_TOKEN"] = ''
@@ -70,4 +86,18 @@ def openai_llm(prompt, model_name='gpt-4o', temperature=0.0, top_p=1.0, max_toke
         response = llm.invoke(prompt).content
         # print(cb)
     # request = llm([HumanMessage(content=prompt)]).content
+    return response, cb.total_cost
+
+def grok_llm(prompt, model_name='grok-3-mini', temperature=0.0, top_p=1.0, max_tokens=4096, stop=[]):
+    """Grok (xAI) via OpenAI-compatible API. Free tier available at console.x.ai"""
+    llm = ChatOpenAI(
+        temperature=temperature,
+        max_tokens=max_tokens,
+        model_name=model_name,
+        openai_api_key=XAI_API_KEY,
+        openai_api_base='https://api.x.ai/v1',
+        model_kwargs={"stop": stop} if stop else {},
+    )
+    with get_openai_callback() as cb:
+        response = llm.invoke(prompt).content
     return response, cb.total_cost
